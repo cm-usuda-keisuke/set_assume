@@ -3,7 +3,7 @@
 This script can get and set AssumeRole Credentials.  
 required: jq command
 
-usage: source set_assume [option]  
+usage: source set_assume.sh [option]  
 Options:  
 - -a: role-arn (required)  
 - -n: role-session-name (required)  
