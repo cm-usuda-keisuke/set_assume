@@ -3,7 +3,7 @@
 # define help
 help() {
 	echo 'This script can get and set AssumeRole Credentials.'
-	echo 'usage: source set_assume [option]'
+	echo 'usage: source set_assume.sh [option]'
 	echo 'Options:'
 	echo '-a: role-arn (required)'
 	echo '-n: role-session-name (required)'
