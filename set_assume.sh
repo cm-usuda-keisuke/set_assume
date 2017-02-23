@@ -61,10 +61,10 @@ while : ;do
 	# check to use MFA
 	if [ -n "$AWS_SETSTS_SERIAL_NUMBER" -a -n "$AWS_SETSTS_TOKEN_CODE" ]; then
 		# use MFA
-		echo $AWS_SETSTS_ROLE_ARN
-		echo $AWS_SETSTS_ROLE_SESSION_NAME
-		echo $AWS_SETSTS_SERIAL_NUMBER
-		echo $AWS_SETSTS_TOKEN_CODE
+		echo 'role-arn:' $AWS_SETSTS_ROLE_ARN
+		echo 'role-session-name:' $AWS_SETSTS_ROLE_SESSION_NAME
+		echo 'serial-number:' $AWS_SETSTS_SERIAL_NUMBER
+		echo 'token-code:' $AWS_SETSTS_TOKEN_CODE
 		result="$(aws sts assume-role \
 			--role-arn "$AWS_SETSTS_ROLE_ARN" \
 			--role-session-name "$AWS_SETSTS_ROLE_SESSION_NAME" \
