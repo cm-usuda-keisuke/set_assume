@@ -5,7 +5,7 @@ required: jq command
 
 usage: source set_assume.sh [option]  
 Options:  
--i and -r' or '-a' is required  
+'-i and -r' or '-a' is required  
 e.g. -a = arn:aws:iam::-i:role/-r
 - -i: account id in arn
 - -r: assume role name in arn
