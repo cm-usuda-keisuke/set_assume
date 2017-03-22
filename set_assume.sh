@@ -1,17 +1,25 @@
-#!/bin/sh
+#!/bin/bash
+# set assume role script
+# version 1.1
 
 # define help
 help() {
 	echo 'This script can get and set AssumeRole Credentials.'
 	echo 'usage: source set_assume.sh [option]'
 	echo 'Options:'
-	echo '-a: role-arn (required)'
+	echo "# -i and -r' or '-a' is required"
+	echo '# e.g. -a = arn:aws:iam::-i:role/-r'
+	echo '-i: account id in arn'
+	echo '-r: assume role name in arn'
+	echo '-a: role-arn'
 	echo '-n: role-session-name (required)'
 	echo '-s: serial-number'
 	echo '-t: token-code'
 }
 
 # unset old profile args
+unset AWS_SETSTS_ACCOUNT_ID
+unset AWS_SETSTS_ROLE
 unset AWS_SETSTS_ROLE_ARN
 unset AWS_SETSTS_ROLE_SESSION_NAME
 unset AWS_SETSTS_SERIAL_NUMBER
@@ -28,10 +36,14 @@ while : ;do
 
 	# get args
 	OPTIND=1
-	while getopts "a:n:s:t:h" opt; do
+	while getopts "i:r:a:n:s:t:h" opt; do
 		case "$opt" in
 			h) help
 				break 2
+				;;
+			i) AWS_SETSTS_ACCOUNT_ID=$OPTARG
+				;;
+			r) AWS_SETSTS_ROLE=$OPTARG
 				;;
 			a) AWS_SETSTS_ROLE_ARN=$OPTARG
 				;;
@@ -48,9 +60,17 @@ while : ;do
 	done
 
 	# check params
+	if [ -n "$AWS_SETSTS_ACCOUNT_ID" -a ${#AWS_SETSTS_ACCOUNT_ID} -eq 14 ]; then
+		AWS_SETSTS_ACCOUNT_ID=$(echo $AWS_SETSTS_ACCOUNT_ID | sed -e 's/-//g')
+	fi
+
 	if [ ! -n "$AWS_SETSTS_ROLE_ARN" ]; then
-		echo "'-a: role-arn' is required"
-		break
+		if [ -n "$AWS_SETSTS_ACCOUNT_ID" -a -n "$AWS_SETSTS_ROLE" ]; then
+			AWS_SETSTS_ROLE_ARN="arn:aws:iam::${AWS_SETSTS_ACCOUNT_ID}:role/${AWS_SETSTS_ROLE}"
+		else
+			echo "'-i and -r' or '-a' is required"
+			break
+		fi
 	fi
 
 	if [ ! -n "$AWS_SETSTS_ROLE_SESSION_NAME" ]; then
