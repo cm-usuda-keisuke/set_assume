@@ -7,7 +7,7 @@ help() {
 	echo 'This script can get and set AssumeRole Credentials.'
 	echo 'usage: source set_assume.sh [option]'
 	echo 'Options:'
-	echo "# -i and -r' or '-a' is required"
+	echo "# '-i and -r' or '-a' is required"
 	echo '# e.g. -a = arn:aws:iam::-i:role/-r'
 	echo '-i: account id in arn'
 	echo '-r: assume role name in arn'
