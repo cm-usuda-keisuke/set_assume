@@ -1,20 +1,25 @@
 #!/bin/bash
 # set assume role script
-# version 1.1
+# version 1.2
 
 # define help
 help() {
 	echo 'This script can get and set AssumeRole Credentials.'
 	echo 'usage: source set_assume.sh [option]'
 	echo 'Options:'
-	echo "# '-i and -r' or '-a' is required"
+	echo "# required options:"
+	echo "#   arn option: ('-i and -r') or '-a'"
+	echo "#   name option: '-n'"
 	echo '# e.g. -a = arn:aws:iam::-i:role/-r'
 	echo '-i: account id in arn'
 	echo '-r: assume role name in arn'
 	echo '-a: role-arn'
-	echo '-n: role-session-name (required)'
+	echo '-n: role-session-name'
 	echo '-s: serial-number'
 	echo '-t: token-code'
+	echo ''
+	echo 'If you want to omit role name, please set $AWS_SETSTS_DEFAULT_ROLE'
+	echo 'e.g. $ echo "export AWS_SETSTS_DEFAULT_ROLE=your_role_name" >> ~/.bash_profile'
 }
 
 # unset old profile args
@@ -33,6 +38,9 @@ while : ;do
 		help
 		break
 	fi
+
+	# if default role is set, use it
+	AWS_SETSTS_ROLE=$AWS_SETSTS_DEFAULT_ROLE
 
 	# get args
 	OPTIND=1
@@ -68,7 +76,7 @@ while : ;do
 		if [ -n "$AWS_SETSTS_ACCOUNT_ID" -a -n "$AWS_SETSTS_ROLE" ]; then
 			AWS_SETSTS_ROLE_ARN="arn:aws:iam::${AWS_SETSTS_ACCOUNT_ID}:role/${AWS_SETSTS_ROLE}"
 		else
-			echo "'-i and -r' or '-a' is required"
+			echo "('-i and -r') or '-a' is required"
 			break
 		fi
 	fi
@@ -113,5 +121,8 @@ while : ;do
 	echo 'AWS_ACCESS_KEY_ID:' $AWS_ACCESS_KEY_ID
 	echo 'AWS_SECRET_ACCESS_KEY:' $AWS_SECRET_ACCESS_KEY
 	echo 'AWS_SESSION_TOKEN:' $AWS_SESSION_TOKEN
+	# check status
+	aws sts get-caller-identity
+	aws configure list
 	break
 done
