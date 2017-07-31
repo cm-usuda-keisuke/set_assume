@@ -9,8 +9,8 @@ help() {
 	echo 'Options:'
 	echo "# required options:"
 	echo "#   arn option: ('-i and -r') or '-a'"
+	echo '#     e.g. -a = arn:aws:iam::-i:role/-r'
 	echo "#   name option: '-n'"
-	echo '# e.g. -a = arn:aws:iam::-i:role/-r'
 	echo '-i: account id in arn'
 	echo '-r: assume role name in arn'
 	echo '-a: role-arn'
