@@ -20,6 +20,8 @@ help() {
 	echo ''
 	echo 'If you want to omit role name, please set $AWS_SETSTS_DEFAULT_ROLE'
 	echo 'e.g. $ echo "export AWS_SETSTS_DEFAULT_ROLE=your_role_name" >> ~/.bash_profile'
+	echo 'If you want to omit mfa serial number, please set $AWS_SETSTS_DEFAULT_SERIAL'
+	echo 'e.g. $ echo "export AWS_SETSTS_DEFAULT_SERIAL=your_serial_number" >> ~/.bash_profile'
 }
 
 # unset old profile args
@@ -41,6 +43,8 @@ while : ;do
 
 	# if default role is set, use it
 	AWS_SETSTS_ROLE=$AWS_SETSTS_DEFAULT_ROLE
+	# set default mfa serial number
+	AWS_SETSTS_SERIAL_NUMBER=$AWS_SETSTS_DEFAULT_SERIAL
 
 	# get args
 	OPTIND=1
