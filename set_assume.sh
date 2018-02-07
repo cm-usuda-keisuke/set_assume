@@ -31,6 +31,9 @@ unset AWS_SETSTS_ROLE_ARN
 unset AWS_SETSTS_ROLE_SESSION_NAME
 unset AWS_SETSTS_SERIAL_NUMBER
 unset AWS_SETSTS_TOKEN_CODE
+unset AWS_ACCESS_KEY_ID
+unset AWS_SECRET_ACCESS_KEY
+unset AWS_SESSION_TOKEN
 
 # loop because exit by break in source command
 while : ;do
